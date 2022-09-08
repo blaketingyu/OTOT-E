@@ -1,3 +1,5 @@
+//Import dotenv
+import * as dotenv from "dotenv";
 //Import express
 import express from "express";
 
@@ -8,11 +10,10 @@ import { apiRoutes } from "../routes/apiRoutes";
 import mongoose from "mongoose";
 
 
-//Import dotenv
-import "dotenv/config";
-
 //Initialise the app
 let app = express();
+
+dotenv.config();
 
 //Intialise port
 const PORT = process.env.PORT || 8080;
@@ -37,7 +38,15 @@ app.get("/", (req, res) => {
 //Use api routes in the App
 app.use('/api', apiRoutes);
 
-mongoose.connect(MONGO_URI);
+if(!MONGO_URI) {
+  throw new Error("missing mongo_uri")
+}
+
+try {
+  mongoose.connect(MONGO_URI)
+} catch (error) {
+  throw new Error(`Unable to connect to mongo -- ${MONGO_URI}`)
+}
 
 const db = mongoose.connection;
 
