@@ -21,8 +21,8 @@ Build the image from the given `Dockerfile` and map the ports accordingly.
 yarn
 
 # Building the docker images
-docker build . -t otot-b1-demo
-docker run -dp <local port>:<exposed port> otot-b1-demo
+docker build -t blaketingyu/otot-b1 .
+docker run -dp <local port>:<exposed port> blaketingyu/otot-b1
 
 # verify that it's running correctly 
 docker ps -a
