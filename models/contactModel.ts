@@ -28,5 +28,5 @@ const contactSchema = new Schema ({
 
 // Export Contact model
 const Contact: Model<ContactDocument> = mongoose.model<ContactDocument>("contact", contactSchema);
-export {Contact, ContactDocument};
+export {Contact, ContactDocument, contactSchema};
 

@@ -1,9 +1,7 @@
 import { Router } from "express";
-import { ContactController } from "../controllers/contactController";
+import * as ContactController from "../controllers/contactController";
 
 export const apiRoutes = Router(); 
-
-const contactController = new ContactController();
 
 apiRoutes.get("/", (req, res) => {
     res.json({
@@ -14,13 +12,13 @@ apiRoutes.get("/", (req, res) => {
 
 // Contact routes
 apiRoutes.route("/contacts")
-    .get(contactController.index)
-    .post(contactController.new);
+    .get(ContactController.index)
+    .post(ContactController.newContact);
 
 apiRoutes.route("/contacts/:_id")
-    .patch(contactController.view)
-    .put(contactController.update)
-    .delete(contactController.delete);
+    .patch(ContactController.view)
+    .put(ContactController.update)
+    .delete(ContactController.deleteContact);
   
   
 

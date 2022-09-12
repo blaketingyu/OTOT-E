@@ -1,9 +1,9 @@
 import { Contact, ContactDocument} from "../models/contactModel";
 import { Request, Response } from "express";
 
-export class ContactController {
-  // Handle index actions
-  index = (req: Request, res: Response) => {
+
+// Handle index actions
+export function index (req: Request, res: Response) {
     Contact.find((err: Error, contacts: ContactDocument) => {
       if (err) {
           return res.status(404).json({
@@ -21,9 +21,12 @@ export class ContactController {
   
   
   // Handle create contact actions
-  new = (req: Request, res: Response) => {
+export function newContact (req: Request, res: Response) {
     if (!(req.body.email && req.body.name)) {
-      return res.status(405).json("email and name cannot be empty!");
+      return res.status(405).json({
+        status: "error", 
+        message: "email and name cannot be empty!"
+      });
     }
     const newContact = new Contact();
     const {name, email, gender, phone} = req.body;
@@ -34,8 +37,12 @@ export class ContactController {
     
     // save the contact and check for errors
     newContact.save((err) => {
-      if (err) return res.status(500).json(err);
-      res.json({
+      if (err) return res.status(500).json({
+        status: "error", 
+        message: "Internal server error, cant save new contact"
+      });
+      res.status(200).json({
+        status: "success",
         message: "New contact created!",
         data: newContact,
       });
@@ -45,29 +52,42 @@ export class ContactController {
   
   
   // Handle view contact info
-  view = (req: Request, res: Response) => {
+  export function view (req: Request, res: Response) {
     Contact.findById(req.params._id, (err: Error, contact: ContactDocument) => {
       console.log(req.params);
-      if (err) return res.status(404).send(err);
+      if (err) return res.status(404).send(err).json({
+        status: "error", 
+        message: "Cant find contact!"
+      });
       res.json({
+        status: "success",
         message: "Contact details loading..",
         data: contact,
       });
     });
   };
 
+  /*
+  Need to safeguard against the cannot set header crap
+  */
   
   // Handle update contact info
-  update = (req: Request, res: Response) => {
+  export function update (req: Request, res: Response) {
     Contact.findById(req.params._id, (err: Error, contactToUpdate: ContactDocument) => {
-      if (err) return res.status(404).send(err);
+      if (err) return res.status(404).send(err).json({
+        status: "error", 
+        message: "Cant find contact!"
+      });
       contactToUpdate.name = req.body.name ? req.body.name : contactToUpdate.name;
       contactToUpdate.gender = req.body.gender;
       contactToUpdate.email = req.body.email;
       contactToUpdate.phone = req.body.phone;
       // save the contact and check for errors
       contactToUpdate.save((err: Error) => {
-        if (err) return res.status(500).json(err);
+        if (err) return res.status(500).json(err).json({
+          status: "error", 
+          message: "Internal server error! Cant update"
+        });
         res.json({
           message: "Contact Info updated",
           data: contactToUpdate,
@@ -77,13 +97,16 @@ export class ContactController {
   };
 
   // Handle delete contact
-  delete = (req: Request, res: Response) => {
+export function deleteContact (req: Request, res: Response) {
     Contact.deleteOne(
       {
         _id: req.params._id,
       },
       (err: Error) => {
-        if (err) return res.status(404).send(err);
+        if (err) return res.status(404).send(err).json({
+          status: "error", 
+          message: "Cant find/delete contact"
+        });
         res.json({
           status: "success",
           message: "Contact deleted",
@@ -91,7 +114,4 @@ export class ContactController {
       }
     );
   };
-  
-}
-
 
