@@ -1,6 +1,8 @@
 import { Contact, ContactDocument} from "../models/contactModel";
 import { Request, Response } from "express";
+import mongoose from "mongoose";
 
+const ObjectId = mongoose.Types.ObjectId;
 
 // Handle index actions
 export function index (req: Request, res: Response) {
@@ -53,19 +55,29 @@ export function newContact (req: Request, res: Response) {
   
   // Handle view contact info
   export function view (req: Request, res: Response) {
+    const requestId = req.params._id;
+    const isValidId = ObjectId.isValid(requestId);
+    if (isValidId) {
     Contact.findById(req.params._id, (err: Error, contact: ContactDocument) => {
       console.log(req.params);
       if (err) return res.status(404).send(err).json({
         status: "error", 
         message: "Cant find contact!"
       });
+    
       res.json({
         status: "success",
         message: "Contact details loading..",
         data: contact,
       });
     });
-  };
+  } else {
+      return res.status(404).json({
+        status: "error",
+        message: "not a valid id"
+     });
+  }
+}
 
   /*
   Need to safeguard against the cannot set header crap
@@ -73,15 +85,18 @@ export function newContact (req: Request, res: Response) {
   
   // Handle update contact info
   export function update (req: Request, res: Response) {
+    const requestId = req.params._id;
+    const isValidId = ObjectId.isValid(requestId);
+    if (isValidId) {
     Contact.findById(req.params._id, (err: Error, contactToUpdate: ContactDocument) => {
       if (err) return res.status(404).send(err).json({
         status: "error", 
         message: "Cant find contact!"
       });
       contactToUpdate.name = req.body.name ? req.body.name : contactToUpdate.name;
-      contactToUpdate.gender = req.body.gender;
-      contactToUpdate.email = req.body.email;
-      contactToUpdate.phone = req.body.phone;
+      contactToUpdate.gender = req.body.gender ? req.body.gender : contactToUpdate.gender;
+      contactToUpdate.email = req.body.email ? req.body.email : contactToUpdate.email;
+      contactToUpdate.phone = req.body.phone ? req.body.phone : contactToUpdate.phone;
       // save the contact and check for errors
       contactToUpdate.save((err: Error) => {
         if (err) return res.status(500).json(err).json({
@@ -89,15 +104,25 @@ export function newContact (req: Request, res: Response) {
           message: "Internal server error! Cant update"
         });
         res.json({
+          status: "success",
           message: "Contact Info updated",
           data: contactToUpdate,
         });
       });
     });
+  } else {
+    return res.status(404).json({
+      status: "error",
+      message: "invalid id"
+    });
+  }
   };
 
   // Handle delete contact
 export function deleteContact (req: Request, res: Response) {
+    const requestId = req.params._id;
+    const isValidId = ObjectId.isValid(requestId);
+    if (isValidId) {
     Contact.deleteOne(
       {
         _id: req.params._id,
@@ -113,5 +138,12 @@ export function deleteContact (req: Request, res: Response) {
         });
       }
     );
-  };
+    } else {
+      return res.status(404).json({
+        status: "error",
+        message: "invalid id",
+    });
+  }
+}
+
 

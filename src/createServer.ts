@@ -20,7 +20,7 @@ function createServer() {
   app.use("/api", apiRoutes);
 
   app.use("*", (req, res) => {
-    res.status(404).send("<h1> 404 Error </h1>").json({
+    res.status(404).json({
       status: "error",
       message: "Page does not exist"
     });
