@@ -67,7 +67,10 @@ describe("POST", () => {
       expect(res.statusCode).toBe(200);
       expect(res.body.status).toBe("success");
       expect(res.body.message).toBe("New contact created!");
-      expect(res.body.data).not.toBeNull();
+      expect(res.body.data._id).toEqual(validContactId);
+      expect(res.body.data.name).toEqual("Dog");
+      expect(res.body.data.gender).toEqual("dog");
+      expect(res.body.data.phone).toEqual("dog");
     });
   });
 });
@@ -90,7 +93,73 @@ describe("PATCH", () => {
         const res = await request(app).patch(`/api/contacts/${invalidContactId}`);
         expect(res.statusCode).toBe(404);
         expect(res.body.status).toBe("error");
-        expect(res.body.message).toBe("Page does not exist");
+        expect(res.body.message).toBe("not a valid id");
       });
     });
+})
+
+    describe("PATCH", () => {
+        describe("Valid contact", () => {
+          test("returns success", async () => {
+            const res = await request(app).patch(`/api/contacts/${validContactId}`);
+            expect(res.statusCode).toBe(200);
+            expect(res.body.status).toBe("success");
+            expect(res.body.message).toBe("Contact details loading..");
+          });
+        });
   });
+
+  describe("PUT", () => {
+    describe("invalid contact", () => {
+      test("returns error", async () => {
+        const res = await request(app).put(`/api/contacts/${invalidContactId}`);
+        expect(res.statusCode).toBe(404);
+        expect(res.body.status).toBe("error");
+        expect(res.body.message).toBe("invalid id");
+      });
+    });
+});
+
+describe("PUT", () => {
+    describe("Valid contact", () => {
+      test("returns success", async () => {
+        const res = await request(app)
+        .put(`/api/contacts/${validContactId}`)
+        .send({
+            "name":"Cat"
+        });
+        expect(res.statusCode).toBe(200);
+        expect(res.body.status).toBe("success");
+        expect(res.body.message).toBe("Contact Info updated");
+        expect(res.body.data._id).toEqual(validContactId);
+        expect(res.body.data.name).toEqual("Cat");
+        expect(res.body.data.gender).toEqual("dog");
+        expect(res.body.data.phone).toEqual("dog");
+      });
+    });
+});
+
+describe("DELETE", () => {
+  describe("invalid contact", () => {
+    test("returns error", async () => {
+      const res = await request(app)
+      .delete(`/api/contacts/${invalidContactId}`);
+      expect(res.statusCode).toBe(404);
+      expect(res.body.status).toBe("error");
+      expect(res.body.message).toBe("invalid id");
+    });
+  });
+});
+
+describe("DELETE", () => {
+  describe("Valid contact", () => {
+    test("returns success", async () => {
+      const res = await request(app)
+      .delete(`/api/contacts/${validContactId}`);
+      expect(res.statusCode).toBe(200);
+      expect(res.body.status).toBe("success");
+      expect(res.body.message).toBe("Contact deleted");
+    });
+  });
+});
+
