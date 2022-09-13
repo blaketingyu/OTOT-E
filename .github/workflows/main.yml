@@ -38,5 +38,5 @@ jobs:
       - name: Create mongoDB Docker container      
         run: sudo docker run -d -p 27017:27017 mongo:latest
       - run: rm -rf node_modules && yarn install --frozen-lockfile
-      - run: yarn test --prefer-offline --frozen-lockfile
+      - run: yarn test
 
