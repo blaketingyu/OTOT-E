@@ -11,7 +11,8 @@ on:
     branches: [ "main" ]
 
 env:
-  DB_LOCAL_URI: mongodb+srv://mongodb:mongodb@cluster0.itax9ca.mongodb.net/?retryWrites=true&w=majority
+  PROJECT_ID: ${{secrets.GCP_PROJECT_ID}}
+  REGION: asia-southeast1
   # Allows you to run this workflow manually from the Actions tab
   workflow_dispatch:
 
@@ -39,4 +40,6 @@ jobs:
         run: sudo docker run -d -p 27017:27017 mongo:latest
       - run: rm -rf node_modules && yarn install --frozen-lockfile
       - run: yarn test
+        env:
+          DB_LOCAL_URI: ${{secrets.MONGO_URI}}
 
