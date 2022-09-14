@@ -74,9 +74,11 @@ jobs:
             docker push gcr.io/${{ env.PROJECT_ID }}/${{ env.SERVICE }}:${{  github.sha }}
         - name: Deploy Backend to Cloud Run
           run: |-
-            gcloud run deploy ${{ env.SERVICE }} \
+            gcloud run deploy add-iam-policy-binding ${{ env.SERVICE }} \
               --region ${{ env.REGION }} \
               --image gcr.io/${{ env.PROJECT_ID }}/${{ env.SERVICE }}:${{  github.sha }} \
               --set-env-vars "MONGO_URI=${{secrets.MONGO_URI}}" \
-              --allow-unauthenticated
+              --allow-unauthenticated \
+              --member="allUsers" \
+              --role="roles/run.invoker"
 
