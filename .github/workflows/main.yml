@@ -77,5 +77,5 @@ jobs:
             gcloud run deploy ${{ env.SERVICE }} \
               --region ${{ env.REGION }} \
               --image gcr.io/${{ env.PROJECT_ID }}/${{ env.SERVICE }}:${{  github.sha }} \
-              --set-env-vars ${{secrets.MONGO_URI}}
+              --set-env-vars "MONGO_URI=${{secrets.MONGO_URI}}"
 
