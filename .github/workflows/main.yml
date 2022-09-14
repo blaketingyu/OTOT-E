@@ -78,7 +78,8 @@ jobs:
               --region ${{ env.REGION }} \
               --image gcr.io/${{ env.PROJECT_ID }}/${{ env.SERVICE }}:${{  github.sha }} \
               --set-env-vars "MONGO_URI=${{secrets.MONGO_URI}}" \
-              --allow-unauthenticated \  
+              --allow-unauthenticated
+              
         - name: Run service
           run: |-
            gcloud run services add-iam-policy-binding ${{env.SERVICE}} \
