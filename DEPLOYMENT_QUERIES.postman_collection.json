@@ -1,0 +1,161 @@
+{
+	"info": {
+		"_postman_id": "0b79db36-22b0-4343-b756-022f596dd1e1",
+		"name": "DEPLOYMENT_QUERIES",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "3180134"
+	},
+	"item": [
+		{
+			"name": "CONNECTION_CHECK",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "{{DEPLOYMENT_URL}}",
+					"host": [
+						"{{DEPLOYMENT_URL}}"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "API_PAGE_CHECK",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "{{DEPLOYMENT_URL}}/api",
+					"host": [
+						"{{DEPLOYMENT_URL}}"
+					],
+					"path": [
+						"api"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "GET_ALL_CONTACTS",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "{{DEPLOYMENT_URL}}/api/contacts",
+					"host": [
+						"{{DEPLOYMENT_URL}}"
+					],
+					"path": [
+						"api",
+						"contacts"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "ADD_CONTACT",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n      \"name\": \"blako\",\n      \"email\": \"email\"\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{DEPLOYMENT_URL}}/api/contacts",
+					"host": [
+						"{{DEPLOYMENT_URL}}"
+					],
+					"path": [
+						"api",
+						"contacts"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "UPDATE_CONTACT",
+			"request": {
+				"method": "PUT",
+				"header": [],
+				"url": {
+					"raw": "{{DEPLOYMENT_URL}}/api/contacts/:contactid",
+					"host": [
+						"{{DEPLOYMENT_URL}}"
+					],
+					"path": [
+						"api",
+						"contacts",
+						":contactid"
+					],
+					"variable": [
+						{
+							"key": "contactid",
+							"value": null
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "VIEW_CONTACT",
+			"request": {
+				"method": "PATCH",
+				"header": [],
+				"url": {
+					"raw": "{{DEPLOYMENT_URL}}/api/contacts/:contactid",
+					"host": [
+						"{{DEPLOYMENT_URL}}"
+					],
+					"path": [
+						"api",
+						"contacts",
+						":contactid"
+					],
+					"variable": [
+						{
+							"key": "contactid",
+							"value": null
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "DELETE_CONTACT",
+			"request": {
+				"method": "DELETE",
+				"header": [],
+				"url": {
+					"raw": "{{DEPLOYMENT_URL}}/api/contacts/:contactid",
+					"host": [
+						"{{DEPLOYMENT_URL}}"
+					],
+					"path": [
+						"api",
+						"contacts",
+						":contactid"
+					],
+					"variable": [
+						{
+							"key": "contactid",
+							"value": null
+						}
+					]
+				}
+			},
+			"response": []
+		}
+	]
+}
