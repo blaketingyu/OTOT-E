@@ -1,10 +1,12 @@
 import express from "express";
 //Import api routes
 import { apiRoutes } from "../routes/apiRoutes";
+import cors from "cors";
 
 function createServer() {
   const app = express();
   app.use(express.json());
+  app.use(cors());
   // Configure bodyparser to handle post requests
   app.use(
     express.urlencoded({
@@ -22,7 +24,7 @@ function createServer() {
   app.use("*", (req, res) => {
     res.status(404).json({
       status: "error",
-      message: "Page does not exist"
+      message: "Page does not exist",
     });
   });
   return app;

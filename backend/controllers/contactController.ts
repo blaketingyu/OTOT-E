@@ -59,7 +59,6 @@ export function newContact (req: Request, res: Response) {
     const isValidId = ObjectId.isValid(requestId);
     if (isValidId) {
     Contact.findById(req.params._id, (err: Error, contact: ContactDocument) => {
-      console.log(req.params);
       if (err) return res.status(404).send(err).json({
         status: "error", 
         message: "Cant find contact!"
