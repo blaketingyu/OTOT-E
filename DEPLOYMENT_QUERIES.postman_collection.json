@@ -7,7 +7,7 @@
 	},
 	"item": [
 		{
-			"name": "CONNECTION_CHECK",
+			"name": "CONNECTION_CHECK_VALID",
 			"request": {
 				"method": "GET",
 				"header": [],
@@ -56,7 +56,7 @@
 			"response": []
 		},
 		{
-			"name": "ADD_CONTACT",
+			"name": "ADD_CONTACT_VALID",
 			"request": {
 				"method": "POST",
 				"header": [],
@@ -83,32 +83,117 @@
 			"response": []
 		},
 		{
-			"name": "UPDATE_CONTACT",
+			"name": "ADD_CONTACT_INVALID_EMAIL",
 			"request": {
-				"method": "PUT",
+				"method": "POST",
 				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n      \"name\": \"blako\"\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
 				"url": {
-					"raw": "{{DEPLOYMENT_URL}}/api/contacts/:contactid",
+					"raw": "{{DEPLOYMENT_URL}}/api/contacts",
 					"host": [
 						"{{DEPLOYMENT_URL}}"
 					],
 					"path": [
 						"api",
-						"contacts",
-						":contactid"
-					],
-					"variable": [
-						{
-							"key": "contactid",
-							"value": null
-						}
+						"contacts"
 					]
 				}
 			},
 			"response": []
 		},
 		{
-			"name": "VIEW_CONTACT",
+			"name": "ADD_CONTACT_INVALID_NAME",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n      \"email\": \"email\"\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{DEPLOYMENT_URL}}/api/contacts",
+					"host": [
+						"{{DEPLOYMENT_URL}}"
+					],
+					"path": [
+						"api",
+						"contacts"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "UPDATE_CONTACT_VALID",
+			"request": {
+				"method": "PUT",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n      \"name\": \"blakey\",\n      \"email\":\"daddytan@email.com\",\n      \"gender\":\"not straight anymore\"\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{DEPLOYMENT_URL}}/api/contacts/{{VALID_ID}}",
+					"host": [
+						"{{DEPLOYMENT_URL}}"
+					],
+					"path": [
+						"api",
+						"contacts",
+						"{{VALID_ID}}"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "UPDATE_CONTACT_INVALID_ID",
+			"request": {
+				"method": "PUT",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n      \"name\": \"blakey\",\n      \"email\":\"daddytan@email.com\",\n      \"gender\":\"not straight anymore\"\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{DEPLOYMENT_URL}}/api/contacts/{{INVALID_ID}}",
+					"host": [
+						"{{DEPLOYMENT_URL}}"
+					],
+					"path": [
+						"api",
+						"contacts",
+						"{{INVALID_ID}}"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "VIEW_CONTACT_VALID",
 			"request": {
 				"method": "PATCH",
 				"header": [],
@@ -133,7 +218,57 @@
 			"response": []
 		},
 		{
-			"name": "DELETE_CONTACT",
+			"name": "VIEW_CONTACT_INVALID",
+			"request": {
+				"method": "PATCH",
+				"header": [],
+				"url": {
+					"raw": "{{DEPLOYMENT_URL}}/api/contacts/:contactid",
+					"host": [
+						"{{DEPLOYMENT_URL}}"
+					],
+					"path": [
+						"api",
+						"contacts",
+						":contactid"
+					],
+					"variable": [
+						{
+							"key": "contactid",
+							"value": null
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "DELETE_CONTACT_VALID",
+			"request": {
+				"method": "DELETE",
+				"header": [],
+				"url": {
+					"raw": "{{DEPLOYMENT_URL}}/api/contacts/:contactid",
+					"host": [
+						"{{DEPLOYMENT_URL}}"
+					],
+					"path": [
+						"api",
+						"contacts",
+						":contactid"
+					],
+					"variable": [
+						{
+							"key": "contactid",
+							"value": null
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "DELETE_CONTACT_INVALID",
 			"request": {
 				"method": "DELETE",
 				"header": [],
