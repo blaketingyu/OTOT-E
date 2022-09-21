@@ -30,16 +30,15 @@ docker ps -a
 
 ####Postman Collection for API Testing: 
 
-(https://github.com/blaketingyu/OTOT-B/blob/main/DEPLOYMENT_QUERIES.postman_collection.json) [API REQUESTS]
-(https://github.com/blaketingyu/OTOT-B/blob/main/global_env_postman.txt) [GLOBAL ENV VARIABLES]
-
+[API REQUESTS](https://github.com/blaketingyu/OTOT-B/blob/main/DEPLOYMENT_QUERIES.postman_collection.json)
+[GLOBAL ENV VARIABLES](https://github.com/blaketingyu/OTOT-B/blob/main/global_env_postman.txt) 
 Backend Deployment Site: https://otot-b-bwo66nc7ba-as.a.run.app
 
 
 # Task B2:
 
-CI FILE: (https://github.com/blaketingyu/OTOT-B/blob/main/CI.yaml) [CI FILE LINK]
-CD FILE (https://github.com/blaketingyu/OTOT-B/blob/main/CD.yaml) [CD FILE LINK]
+[CI FILE LINK](https://github.com/blaketingyu/OTOT-B/blob/main/CI.yaml) 
+[CD FILE LINK](https://github.com/blaketingyu/OTOT-B/blob/main/CD.yaml) 
 
 Frontend Deployment Site: https://otot-b-blake-blaketingyu.vercel.app/
 
