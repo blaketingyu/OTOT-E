@@ -40,6 +40,7 @@ Backend Deployment Site: https://otot-b-bwo66nc7ba-as.a.run.app
 [CI FILE LINK](https://github.com/blaketingyu/OTOT-B/blob/main/CI.yaml) </br>
 [CD FILE LINK](https://github.com/blaketingyu/OTOT-B/blob/main/CD.yaml) </br>
 
-#Task B3:
+
+# Task B3:
 Frontend Deployment Site: https://otot-b-blake-blaketingyu.vercel.app/
 
