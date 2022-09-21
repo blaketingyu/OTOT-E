@@ -28,7 +28,7 @@ docker run -dp <local port>:<exposed port> blaketingyu/otot-b1
 docker ps -a
 ```
 
-##Postman Collection for API Testing: 
+## Postman Collection for API Testing: 
 
 [API REQUESTS](https://github.com/blaketingyu/OTOT-B/blob/main/DEPLOYMENT_QUERIES.postman_collection.json) </br>
 [GLOBAL ENV VARIABLES](https://github.com/blaketingyu/OTOT-B/blob/main/global_env_postman.txt) </br>
