@@ -8,24 +8,26 @@ function Form() {
     ContactSchema & { _id: string }
   >();
   const onSubmit = async (data: ContactSchema & { _id: string }) => {
-    const curr = await axiosObj.get<ContactSchema & { _id: string }>(
+    const userToUpdate = await axiosObj.patch<ContactSchema & { _id: string }>(
       `api/contacts/${data._id}`
     );
 
-    if (!curr.data) {
-      console.log(`unable to get ${data._id}`);
+    if (!userToUpdate.data) {
+      console.log(`no user with id: ${data._id}`);
     }
 
-    data.email = data.email || curr.data.email;
-    data.gender = data.gender || curr.data.gender;
-    data.name = data.name || curr.data.name;
-    data.phone = data.phone || curr.data.phone;
+    data.email = data.email || userToUpdate.data.email;
+    data.gender = data.gender || userToUpdate.data.gender;
+    data.name = data.name || userToUpdate.data.name;
+    data.phone = data.phone || userToUpdate.data.phone;
+
+    console.log(`user: ${data}`);
 
     axiosObj
-      .patch(`api/contacts/${data._id}`, data)
+      .put(`api/contacts/${data._id}`, data)
       .then(() => reset())
       .catch(() => {
-        console.log(`unable to update ${data._id} with`, data);
+        console.log("update failed");
       });
   };
 
@@ -76,7 +78,7 @@ function Form() {
         className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline"
         type="button"
       >
-        <input type="submit" value={"Update"} />
+        <input type="submit" value={"update"} />
       </button>
     </form>
   );

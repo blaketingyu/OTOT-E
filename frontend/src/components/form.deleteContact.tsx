@@ -7,14 +7,15 @@ function Form() {
   const { register, handleSubmit, reset } = useForm<
     ContactSchema & { _id: string }
   >();
+
   const onSubmit = (data: ContactSchema & { _id: string }) => {
     axiosObj
       .delete(`/api/contacts/${data._id}`)
       .then((value) => {
         reset();
-        console.log(value);
+        console.log(`id: ${value}`);
       })
-      .catch(() => `unable to delete ${data._id}`);
+      .catch(() => "delete failed");
   };
 
   return (
@@ -32,7 +33,7 @@ function Form() {
         className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline"
         type="button"
       >
-        <input type="submit" value={"Delete"} />
+        <input type="submit" value={"delete"} />
       </button>
     </form>
   );
