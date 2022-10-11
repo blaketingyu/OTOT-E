@@ -21,4 +21,3 @@ apiRoutes
   .patch(ContactController.view)
   .put(ContactController.update)
   .delete(ContactController.deleteContact);
-

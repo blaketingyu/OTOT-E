@@ -1,6 +1,7 @@
 import express from "express";
 //Import api routes
 import { apiRoutes } from "../routes/apiRoutes";
+import { redisRoutes } from "../routes/redisRoutes";
 import cors from "cors";
 
 function createServer() {
@@ -20,6 +21,8 @@ function createServer() {
 
   //Use api routes in the App
   app.use("/api", apiRoutes);
+
+  app.use("/redistest", redisRoutes);
 
   app.use("*", (req, res) => {
     res.status(404).json({
