@@ -53,7 +53,8 @@ export const getWithRedis = async (req: Request, res: Response) => {
   } else {
     console.log("Cache hit");
     const data = await client.get(key);
-    res.send(JSON.parse(data));
+    res.status(200).send(JSON.parse(data));
+    //res.status(200).send({ message: "success" });
   }
   console.timeEnd("Redis");
 };
@@ -65,6 +66,7 @@ export const normalMongoGet = async (req: Request, res: Response) => {
     res.sendStatus(500);
   } else {
     res.status(200).send(data);
+    //res.status(200).send({ message: "success" });
   }
   console.timeEnd("Mongo");
 };
