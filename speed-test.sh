@@ -2,7 +2,7 @@
 
 #Check connection
 echo "Check connection\n"
-curl http://localhost:8080/redistest 
+curl http://localhost:8080/redistest > /dev/null 2>&1
 
 echo "populate data\n"
 curl -d "" http://localhost:8080/redistest/populateDB > /dev/null 2>&1
