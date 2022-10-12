@@ -2,7 +2,6 @@ import { Request, Response } from "express";
 import { Contact } from "../models/contactModel";
 import { faker } from "@faker-js/faker";
 import { client } from "../src/redisServer";
-//import { axiosObj } from "./axios.config";
 
 const seed = async () => {
   try {
@@ -23,8 +22,6 @@ const seed = async () => {
   }
 };
 
-const key = "contacts";
-
 async function getData() {
   const data = await Contact.find();
   return data;
@@ -40,6 +37,9 @@ export const populateDB = async (req: Request, res: Response) => {
     res.status(422).send({ error, message: "Error" });
   }
 };
+
+const key = "contacts";
+
 export const getWithRedis = async (req: Request, res: Response) => {
   console.time("Redis");
 
