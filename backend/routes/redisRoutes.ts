@@ -1,5 +1,11 @@
 import { Router } from "express";
-import { getWithAxios, getWithRedis, redisTeardown } from "../src/redisTest";
+import {
+  normalMongoGet,
+  getWithRedis,
+  populateDB,
+  clearRedis,
+  clearDB,
+} from "../src/redisTest";
 
 export const redisRoutes = Router();
 
@@ -10,5 +16,7 @@ redisRoutes.get("/", (req, res) => {
   });
 });
 redisRoutes.route("/redistime").get(getWithRedis);
-redisRoutes.route("/axiostime").get(getWithAxios);
-redisRoutes.route("/clearcache").post(redisTeardown);
+redisRoutes.route("/mongotime").get(normalMongoGet);
+redisRoutes.route("/clearcache").post(clearRedis);
+redisRoutes.route("/populateDB").post(populateDB);
+redisRoutes.route("/clearDB").post(clearDB);

@@ -1,14 +1,13 @@
 import { Request, Response } from "express";
 import { Contact } from "../models/contactModel";
-//import { faker } from "@faker-js/faker";
+import { faker } from "@faker-js/faker";
 import { client } from "../src/redisServer";
-import { axiosObj } from "./axios.config";
+//import { axiosObj } from "./axios.config";
 
-/*
 const seed = async () => {
   try {
     const contacts = [];
-    for (let i = 0; i < 10; i++) {
+    for (let i = 0; i < 50000; i++) {
       const name = faker.name.fullName();
       const newContact = {
         name: name,
@@ -17,51 +16,65 @@ const seed = async () => {
         phone: faker.phone.number(),
       };
       contacts.push(newContact);
-      client.set(name, JSON.stringify(newContact));
     }
     await Contact.insertMany(contacts);
   } catch (error) {
     console.log(error);
   }
 };
-*/
-const key = "Pokemons";
+
+const key = "contacts";
 
 async function getData() {
-  const { data } = await axiosObj.get("/api/v2/pokemon?limit=905");
+  const data = await Contact.find();
   return data;
 }
 
+export const populateDB = async (req: Request, res: Response) => {
+  try {
+    await seed();
+    console.log("DB populated");
+    res.status(201).send("Populated");
+  } catch (error) {
+    console.log("failed to populate DB");
+    res.status(422).send({ error, message: "Error" });
+  }
+};
 export const getWithRedis = async (req: Request, res: Response) => {
-  console.time("redis runtime");
+  console.time("Redis");
 
-  const allPokemon = await client.get(key);
+  const allContacts = await client.get(key);
 
-  if (!allPokemon) {
+  if (!allContacts) {
     console.log("Cache miss");
     const data = await getData();
-    client.setEx(key, 60, JSON.stringify(data));
+    client.setEx(key, 1400, JSON.stringify(data));
     res.send(data);
   } else {
     console.log("Cache hit");
     const data = await client.get(key);
     res.send(JSON.parse(data));
   }
-  console.timeEnd("redis runtime");
+  console.timeEnd("Redis");
 };
 
-export const getWithAxios = async (req: Request, res: Response) => {
-  console.time("axios runtime");
+export const normalMongoGet = async (req: Request, res: Response) => {
+  console.time("Mongo");
   const data = await getData();
   if (!data) {
     res.sendStatus(500);
   } else {
     res.status(200).send(data);
   }
-  console.timeEnd("axios runtime");
+  console.timeEnd("Mongo");
 };
 
-export const redisTeardown = async (req: Request, res: Response) => {
+export const clearRedis = async (req: Request, res: Response) => {
   client.flushAll();
   res.send("cleared redis");
+};
+
+export const clearDB = async (req: Request, res: Response) => {
+  Contact.collection.drop();
+  res.send("cleared db");
 };
