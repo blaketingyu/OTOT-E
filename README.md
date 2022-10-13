@@ -2,7 +2,7 @@
 
 * **Name**: Tan Ting Yu
 * **Matric. Number**: A0218235J
-* **Repo Link**: [https://github.com/blaketingyu/OTOT-B](https://github.com/blaketingyu/OTOT-E)
+* **Repo Link**: [https://github.com/blaketingyu/OTOT-E](https://github.com/blaketingyu/OTOT-E)
 
 # Task E:
 
